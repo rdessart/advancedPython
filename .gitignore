@@ -1,3 +1,4 @@
 venv/
 advancedPython.code-workspace
 .vscode/
+analysis/__pycache__/

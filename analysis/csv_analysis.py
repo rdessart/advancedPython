@@ -2,14 +2,14 @@
 # coding: utf-8
 
 import logging
+import pandas as pd
 
 logging.basicConfig(level=logging.DEBUG)
 
 
 def launch_analysis(data_file):
     try:
-        with open(data_file, "r") as f:
-            logging.debug(f.readline())
+        mps = pd.read_csv(data_file, sep=";")
     except FileNotFoundError as e:
         logging.critical("File not found - '{}'".format(e))
-        return
+    return mps

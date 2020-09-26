@@ -2,9 +2,9 @@
 # coding: utf-8
 
 import argparse
-import logging
 import analysis.csv_analysis as csv
 import analysis.xml_analysis as xml
+import parliamentMembers
 
 from os import path
 
@@ -19,6 +19,16 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def parse_csv(file):
+    print("parsing as CSV")
+    data = csv.launch_analysis(file)
+    pms = parliamentMembers.SetOfParliamentMembers("")
+    pms.data_from_dataframe(data)
+    result = pms.split_by_politcal_parties()
+    pms.display_chart()
+    return result
+
+
 def main():
     args = parse_arguments()
     directory = path.dirname(__file__)
@@ -27,8 +37,7 @@ def main():
         print("parsing as XML")
         xml.launch_analysis(path_to_file)
     elif args.extension.upper() == 'CSV':
-        print("parsing as CSV")
-        csv.launch_analysis(path_to_file)
+        print(parse_csv(path_to_file))
 
 
 if __name__ == "__main__":
